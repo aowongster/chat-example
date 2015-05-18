@@ -1,5 +1,11 @@
 var socket = io();
 
+// on dom ready
+$(function(){
+  $('#user').val('person' + Math.floor(Math.random() * 100));
+});
+
+
 $('form').submit(function(){
   if($('#m').val().length) {
     socket.emit('chat message', $('#user').val() + ': ' + $('#m').val());
