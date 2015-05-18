@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         src: ['lib/**/*.js', 'test/**/*.js']
       },
       lib_src: {
-        src: ['index.js']
+        src: ['index.js', 'public/**/*.js']
       }
     },
     qunit: {
