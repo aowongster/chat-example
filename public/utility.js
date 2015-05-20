@@ -1,19 +1,42 @@
-var socket = io();
+(function() {
+  var socket = io();
 
-$('form').submit(function(){
-  socket.emit('chat message', $('#m').val());
-  $('#m').val('');
-  return false;
-});
+// on dom ready
+  $(function(){
+    $('#user').val('person' + Math.floor(Math.random() * 100));
+  });
 
-socket.on('chat message', function(msg){
-  $('#messages').append($('<li>').text(msg));
-});
+//TODO do some client side input form parsing
+  $('form').submit(function(){
+    if($('#m').val().length) {
+      var user = $('#user').val();
+      var msg = $('#m').val();
 
-socket.on('join', function(msg){
-  $('#messages').append($('<li>').text(msg));
-});
+      socket.emit('chat message', user , msg);
+      user = "you";
 
-socket.on('left', function(msg){
-  $('#messages').append($('<li>').text(msg));
-});
+      // have to append our own element
+      // TODO refactor chat append code, keep it dry
+      $msg = "<span><strong>" +user+ "</strong>: "+msg+"</span>";
+      $('#messages').append($('<li>').html($msg));
+
+      // clear input
+      $('#m').val('');
+    }
+    return false;
+  });
+
+  socket.on('chat message', function(user, msg){
+    $msg = "<span><strong>"+user+"</strong> "+msg+"</span>";
+    $('#messages').append($('<li>').html($msg));
+  });
+
+  socket.on('join', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+
+  socket.on('left', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+
+})();
