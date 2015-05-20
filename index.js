@@ -15,16 +15,17 @@ app.use('/public', express.static(__dirname + '/public'));
 io.on('connection', function(socket){
 
   debug('a user connected');
-  io.emit('join', 'new user has joined the chat');
+  socket.broadcast.emit('join', 'A new user has joined the chat.');
 
   socket.on('disconnect', function(){
     debug('user disconnected');
-    io.emit('left','user has left the chat');
+    io.emit('left','A old user has left the chat.');
   });
 
-  socket.on('chat message', function(msg){
+  // chat is received // do some user parsing
+  socket.on('chat message', function(user, msg){
     if(msg.length) {
-      io.emit('chat message', msg);
+      socket.broadcast.emit('chat message', user, msg);
       debug('message received: ' + msg);
     }
   });
