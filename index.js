@@ -31,6 +31,7 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
+const PORT = process.argv[2] || 3000 
+http.listen(PORT, function(){
   debug('listening on *:3000');
 });
