@@ -17,7 +17,7 @@
 
       // have to append our own element
       // TODO refactor chat append code, keep it dry
-      $msg = "<span><strong>" +user+ "</strong>: "+msg+"</span>";
+      var $msg = "<span><strong>" +user+ "</strong>: "+msg+"</span>";
       $('#messages').append($('<li>').html($msg));
 
       // clear input
@@ -27,7 +27,7 @@
   });
 
   socket.on('chat message', function(user, msg){
-    $msg = "<span><strong>"+user+"</strong> "+msg+"</span>";
+    var $msg = "<span><strong>"+user+"</strong> "+msg+"</span>";
     $('#messages').append($('<li>').html($msg));
   });
 
